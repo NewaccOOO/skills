@@ -1,0 +1,87 @@
+{
+  "name": "hacking-skills",
+  "owner": {
+    "name": "hacking-skills contributors"
+  },
+  "metadata": {
+    "description": "Claude Code skills for finding bugs and vulnerabilities — bug bounty, pentest, CTF, code review.",
+    "version": "0.3.0"
+  },
+  "plugins": [
+    {
+      "name": "web",
+      "description": "Web application security skills covering recon, authentication, authorization, session management, injection, client-side attacks, and business logic. Distilled from OWASP WSTG, security research, and bug bounty writeups.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/web/recon/web-fingerprinting",
+        "./skills/web/auth/auth-bypass",
+        "./skills/web/auth/default-credentials",
+        "./skills/web/auth/password-reset-flaws",
+        "./skills/web/auth/jwt-misconfig",
+        "./skills/web/session/cookie-attacks",
+        "./skills/web/session/session-fixation",
+        "./skills/web/authz/authz-bypass",
+        "./skills/web/authz/bola-idor",
+        "./skills/web/authz/path-traversal",
+        "./skills/web/authz/mass-assignment",
+        "./skills/web/injection/sql-injection",
+        "./skills/web/injection/xss-reflected",
+        "./skills/web/injection/xss-stored",
+        "./skills/web/injection/cmd-injection",
+        "./skills/web/injection/ssrf",
+        "./skills/web/injection/ssti",
+        "./skills/web/injection/xxe",
+        "./skills/web/injection/http-request-smuggling",
+        "./skills/web/client-side/dom-xss",
+        "./skills/web/client-side/csrf",
+        "./skills/web/client-side/cors-misconfig",
+        "./skills/web/client-side/clickjacking",
+        "./skills/web/client-side/cspt",
+        "./skills/web/client-side/open-redirect",
+        "./skills/web/logic/business-logic-flaws",
+        "./skills/web/logic/insecure-file-upload",
+        "./skills/web/logic/graphql-idor-via-introspection-leak"
+      ]
+    },
+    {
+      "name": "mobile",
+      "description": "Mobile application security skills covering Android and iOS: insecure storage, weak cryptography, authentication bypass, network security, platform interaction, code quality, and resilience against reverse engineering.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/mobile/storage/mobile-insecure-storage",
+        "./skills/mobile/crypto/mobile-weak-crypto",
+        "./skills/mobile/auth/mobile-auth-bypass",
+        "./skills/mobile/network/mobile-network-security",
+        "./skills/mobile/platform/mobile-platform-interaction",
+        "./skills/mobile/code/mobile-code-quality",
+        "./skills/mobile/resilience/mobile-resilience"
+      ]
+    },
+    {
+      "name": "cicd",
+      "description": "CI/CD pipeline security skills covering GitHub Actions script injection, cache poisoning, pwn-request, bot command injection, and self-hosted runner poisoning.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/cicd/github-actions-script-injection",
+        "./skills/cicd/github-actions-cache-poisoning",
+        "./skills/cicd/pwn-request",
+        "./skills/cicd/cicd-bot-command-injection",
+        "./skills/cicd/self-hosted-runner-poisoning"
+      ]
+    },
+    {
+      "name": "meta",
+      "description": "Paste any source → SKILL.md (/distill-skill); log run outcomes (/observe-skill); inspect failure history and propose amendments (/amend-skill).",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/meta/distill-skill",
+        "./skills/meta/observe-skill",
+        "./skills/meta/amend-skill"
+      ]
+    }
+  ]
+}

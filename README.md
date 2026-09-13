@@ -8,7 +8,7 @@
 ![Агент](https://img.shields.io/badge/агент-Claude%20Code-6f42c1)
 ![Скиллов](https://img.shields.io/badge/скиллов-3-1f6feb)
 
-[Скиллы](#скиллы) · [Как связаны](#как-скиллы-связаны) · [Установка](#установка) · [Источники](#источники)
+[Скиллы](#скиллы) · [Как связаны](#как-скиллы-связаны) · [CTF](#ctf) · [Установка](#установка) · [Источники](#источники)
 
 </div>
 
@@ -84,6 +84,21 @@ flowchart LR
     classDef default fill:#eef1f5,stroke:#9aa4b2,stroke-width:1px,color:#1f2328
     style G fill:#cfe3ff,stroke:#1f6feb,stroke-width:2px,color:#1f2328
 ```
+
+## CTF
+
+В папке [`ctf/`](ctf/) лежат сторонние наборы скиллов для CTF и авторизованного пентеста —
+это копии внешних репозиториев, а не скиллы этого проекта. Перед добавлением каждый набор
+прочитан на предмет опасного кода.
+
+| Набор | Что даёт | Источник | Лицензия |
+|---|---|---|---|
+| [`ctf-claude`](ctf/ctf-claude/) | recon, web, pwn, privesc, docker escape, AD/ADCS (9 скиллов) | [hatrickkkk/ctf-claude](https://github.com/hatrickkkk/ctf-claude) | не указана |
+| [`hacking-skills`](ctf/hacking-skills/) | методики по web/mobile/CI-CD, OWASP WSTG (43 скилла) | [securityfortech/hacking-skills](https://github.com/securityfortech/hacking-skills) | не указана |
+| [`claude-code-pentest`](ctf/claude-code-pentest/) | весь цикл пентеста, python-скрипты (6 скиллов) | [Orizon-eu/claude-code-pentest](https://github.com/Orizon-eu/claude-code-pentest) | MIT |
+
+Установка, итоги проверки безопасности и оговорки — в [`ctf/README.md`](ctf/README.md).
+Только для авторизованного тестирования и по scope соревнования.
 
 ## Установка
 
