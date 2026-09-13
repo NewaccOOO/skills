@@ -87,18 +87,21 @@ flowchart LR
 
 ## CTF
 
-В папке [`ctf/`](ctf/) лежат сторонние наборы скиллов для CTF и авторизованного пентеста —
-это копии внешних репозиториев, а не скиллы этого проекта. Перед добавлением каждый набор
+В папке [`ctf/`](ctf/) лежат сторонние скиллы для CTF и авторизованного пентеста —
+это копии внешних репозиториев, а не скиллы этого проекта. Перед добавлением каждый
 прочитан на предмет опасного кода.
 
-| Набор | Что даёт | Источник | Лицензия |
-|---|---|---|---|
-| [`ctf-claude`](ctf/ctf-claude/) | recon, web, pwn, privesc, docker escape, AD/ADCS (9 скиллов) | [hatrickkkk/ctf-claude](https://github.com/hatrickkkk/ctf-claude) | не указана |
-| [`hacking-skills`](ctf/hacking-skills/) | методики по web/mobile/CI-CD, OWASP WSTG (43 скилла) | [securityfortech/hacking-skills](https://github.com/securityfortech/hacking-skills) | не указана |
-| [`claude-code-pentest`](ctf/claude-code-pentest/) | весь цикл пентеста, python-скрипты (6 скиллов) | [Orizon-eu/claude-code-pentest](https://github.com/Orizon-eu/claude-code-pentest) | MIT |
+15 скиллов лежат плоско (`ctf/<имя>/`) и ставятся по имени через `npx skills`; набор
+`hacking-skills` оставлен плагином со своим графом.
 
-Установка, итоги проверки безопасности и оговорки — в [`ctf/README.md`](ctf/README.md).
-Только для авторизованного тестирования и по scope соревнования.
+| Источник | Что даёт | Как ставить | Лицензия |
+|---|---|---|---|
+| [hatrickkkk/ctf-claude](https://github.com/hatrickkkk/ctf-claude) | recon, web, pwn, privesc, docker escape, AD/ADCS (9) | `npx skills … --skill ctf-recon` | не указана |
+| [Orizon-eu/claude-code-pentest](https://github.com/Orizon-eu/claude-code-pentest) | весь цикл пентеста, python-скрипты (6) | `npx skills … --skill recon-dominator` | MIT |
+| [securityfortech/hacking-skills](https://github.com/securityfortech/hacking-skills) | методики web/mobile/CI-CD, OWASP (43) | `/plugin marketplace add …` | не указана |
+
+Полная установка, итоги проверки безопасности, Kali-MCP и оговорки —
+в [`ctf/README.md`](ctf/README.md). Только для авторизованного тестирования и по scope.
 
 ## Установка
 
