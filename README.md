@@ -31,34 +31,36 @@ Claude Code сам читает описания и подключает под�
 ## Структура репозитория
 
 ```
-skills/
-├── goal-setter/   постановка длинной автономной задачи: ресёрч, допрос, пакет спеки, промт запуска
-├── unlazy/        проверяемые критерии готовности: гейты, дерево подзадач, Stop-хук
-├── ponytail/      минимальное рабочее решение без лишних абстракций и зависимостей
-├── write-for-humans-ru/  русский текст без ИИ-штампов, эмодзи и декора, с сохранением фактов
-├── prompt-improver/      шаг 1 сценария GIGACODE.md: карточка задачи — цель, граница, критерии готовности
-├── repository-analyzer/  шаг 2: разбор кода со ссылками путь:строка, поток вызовов, влияние изменения
-├── deep-analysis/        шаг 3: вывод, факты и источники, риски, сверка с критериями готовности
-├── jira-ticket/   задача в Jira: четыре блока, черновик в чат, публикация только по прямой команде
-├── GIGACODE.md    глобальные правила: обязательный сценарий из трёх шагов и маршруты скиллов
-└── ctf/           сторонние скиллы для CTF и пентеста — см. ctf/README.md
-    ├── ctf-recon/ … ctf-web/           9 скиллов (ctf-claude)
-    ├── recon-dominator/ … api-breaker/ 6 скиллов (claude-code-pentest)
-    └── hacking-skills/                 плагин: 43 скилла по web/mobile/CI-CD
+skills/                    (корень репозитория)
+├── GIGACODE.md            глобальные правила: обязательный сценарий из трёх шагов и маршруты скиллов
+├── README.md
+└── skills/
+    ├── prompt-improver/      шаг 1 сценария GIGACODE.md: карточка задачи — цель, граница, критерии готовности
+    ├── repository-analyzer/  шаг 2: разбор кода со ссылками путь:строка, поток вызовов, влияние изменения
+    ├── deep-analysis/        шаг 3: вывод, факты и источники, риски, сверка с критериями готовности
+    ├── jira-ticket/          задача в Jira: четыре блока, черновик в чат, публикация только по прямой команде
+    ├── write-for-humans-ru/  русский текст без ИИ-штампов, эмодзи и декора, с сохранением фактов
+    ├── goal-setter/          постановка длинной автономной задачи: ресёрч, допрос, пакет спеки, промт запуска
+    ├── unlazy/               проверяемые критерии готовности: гейты, дерево подзадач, Stop-хук
+    └── ponytail/             минимальное рабочее решение без лишних абстракций и зависимостей
 ```
+
+Структура повторяет установку в GigaCode: корень репозитория — это `.gigacode\`, папка
+`skills/` — это `.gigacode\skills\`. Поэтому ссылки в `GIGACODE.md` работают и на GitHub,
+и после установки.
 
 ## Скиллы
 
 | Скилл | Для чего |
 |---|---|
-| [`goal-setter`](goal-setter/SKILL.md) | готовит долгую задачу для автономного агента: ресёрч, допрос, пакет спеки, промт запуска |
-| [`unlazy`](unlazy/SKILL.md) | не даёт агенту сдать работу, пока не выполнены проверяемые критерии готовности |
-| [`ponytail`](ponytail/SKILL.md) | заставляет писать минимальное рабочее решение без лишних абстракций и зависимостей |
-| [`write-for-humans-ru`](write-for-humans-ru/SKILL.md) | пишет и правит русский текст так, как пишут люди: без штампов, эмодзи, значков и выдуманных фактов |
-| [`prompt-improver`](prompt-improver/SKILL.md) | шаг 1 сценария из `GIGACODE.md`: превращает запрос в карточку задачи, вопросы задаёт только после чтения контекста |
-| [`repository-analyzer`](repository-analyzer/SKILL.md) | шаг 2: разбирает код до изменений, каждое утверждение со ссылкой `путь:строка`, независимые зоны отдаёт параллельным сабагентам |
-| [`deep-analysis`](deep-analysis/SKILL.md) | шаг 3: вывод с фактами, допущениями и неизвестным, риски, сверка с критериями готовности до и после реализации |
-| [`jira-ticket`](jira-ticket/SKILL.md) | готовит задачу в Jira из четырёх блоков, показывает черновик и публикует только по прямой команде |
+| [`goal-setter`](skills/goal-setter/SKILL.md) | готовит долгую задачу для автономного агента: ресёрч, допрос, пакет спеки, промт запуска |
+| [`unlazy`](skills/unlazy/SKILL.md) | не даёт агенту сдать работу, пока не выполнены проверяемые критерии готовности |
+| [`ponytail`](skills/ponytail/SKILL.md) | заставляет писать минимальное рабочее решение без лишних абстракций и зависимостей |
+| [`write-for-humans-ru`](skills/write-for-humans-ru/SKILL.md) | пишет и правит русский текст так, как пишут люди: без штампов, эмодзи, значков и выдуманных фактов |
+| [`prompt-improver`](skills/prompt-improver/SKILL.md) | шаг 1 сценария из `GIGACODE.md`: превращает запрос в карточку задачи, вопросы задаёт только после чтения контекста |
+| [`repository-analyzer`](skills/repository-analyzer/SKILL.md) | шаг 2: разбирает код до изменений, каждое утверждение со ссылкой `путь:строка`, независимые зоны отдаёт параллельным сабагентам |
+| [`deep-analysis`](skills/deep-analysis/SKILL.md) | шаг 3: вывод с фактами, допущениями и неизвестным, риски, сверка с критериями готовности до и после реализации |
+| [`jira-ticket`](skills/jira-ticket/SKILL.md) | готовит задачу в Jira из четырёх блоков, показывает черновик и публикует только по прямой команде |
 
 ### goal-setter
 
@@ -186,7 +188,15 @@ npx skills add NewaccOOO/skills -a claude-code -g --skill ponytail
 
 ```bash
 git clone https://github.com/NewaccOOO/skills.git
-cp -R skills/goal-setter skills/unlazy skills/ponytail ~/.claude/skills/
+cp -R skills/skills/goal-setter skills/skills/unlazy skills/skills/ponytail ~/.claude/skills/
+```
+
+Для GigaCode (PowerShell): скопировать `GIGACODE.md` и содержимое `skills/` в `.gigacode`.
+
+```powershell
+git clone -b no-ctf https://github.com/NewaccOOO/skills.git $env:TEMP\skills
+Copy-Item $env:TEMP\skills\GIGACODE.md C:\Users\23882339\.gigacode\GIGACODE.md
+robocopy $env:TEMP\skills\skills C:\Users\23882339\.gigacode\skills /E
 ```
 
 | Скилл | Что нужно |
@@ -205,9 +215,9 @@ cp -R skills/goal-setter skills/unlazy skills/ponytail ~/.claude/skills/
 
 Рядом с `SKILL.md` могут лежать вспомогательные файлы, которые скилл читает по ходу работы:
 
-- `scripts/` — исполняемые проверки и утилиты (например, `unlazy/scripts/gate-check.mjs`);
+- `scripts/` — исполняемые проверки и утилиты (например, `skills/unlazy/scripts/gate-check.mjs`);
 - `references/` — справочные материалы, которые подгружаются по необходимости;
-- шаблоны и ассеты (например, `goal-setter/assets/templates/`).
+- шаблоны и ассеты (например, `skills/goal-setter/assets/templates/`).
 
 Такую раскладку понимают и Claude Code, и CLI `npx skills`. `npx skills` ищет скиллы на глубину
 до трёх уровней от корня репозитория или папки `skills/`, поэтому скилл должен лежать не глубже
