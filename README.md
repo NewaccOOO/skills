@@ -36,6 +36,9 @@ skills/
 ├── unlazy/        проверяемые критерии готовности: гейты, дерево подзадач, Stop-хук
 ├── ponytail/      минимальное рабочее решение без лишних абстракций и зависимостей
 ├── write-for-humans-ru/  русский текст без ИИ-штампов, эмодзи и декора, с сохранением фактов
+├── prompt-improver/      шаг 1 сценария GIGACODE.md: карточка задачи — цель, граница, критерии готовности
+├── repository-analyzer/  шаг 2: разбор кода со ссылками путь:строка, поток вызовов, влияние изменения
+├── deep-analysis/        шаг 3: вывод, факты и источники, риски, сверка с критериями готовности
 ├── jira-ticket/   задача в Jira: четыре блока, черновик в чат, публикация только по прямой команде
 ├── GIGACODE.md    глобальные правила: обязательный сценарий из трёх шагов и маршруты скиллов
 └── ctf/           сторонние скиллы для CTF и пентеста — см. ctf/README.md
@@ -52,6 +55,9 @@ skills/
 | [`unlazy`](unlazy/SKILL.md) | не даёт агенту сдать работу, пока не выполнены проверяемые критерии готовности |
 | [`ponytail`](ponytail/SKILL.md) | заставляет писать минимальное рабочее решение без лишних абстракций и зависимостей |
 | [`write-for-humans-ru`](write-for-humans-ru/SKILL.md) | пишет и правит русский текст так, как пишут люди: без штампов, эмодзи, значков и выдуманных фактов |
+| [`prompt-improver`](prompt-improver/SKILL.md) | шаг 1 сценария из `GIGACODE.md`: превращает запрос в карточку задачи, вопросы задаёт только после чтения контекста |
+| [`repository-analyzer`](repository-analyzer/SKILL.md) | шаг 2: разбирает код до изменений, каждое утверждение со ссылкой `путь:строка`, независимые зоны отдаёт параллельным сабагентам |
+| [`deep-analysis`](deep-analysis/SKILL.md) | шаг 3: вывод с фактами, допущениями и неизвестным, риски, сверка с критериями готовности до и после реализации |
 | [`jira-ticket`](jira-ticket/SKILL.md) | готовит задачу в Jira из четырёх блоков, показывает черновик и публикует только по прямой команде |
 
 ### goal-setter
@@ -128,6 +134,24 @@ flowchart LR
     style G fill:#cfe3ff,stroke:#1f6feb,stroke-width:2px,color:#1f2328
 ```
 
+### Сценарий GIGACODE.md
+
+`prompt-improver`, `repository-analyzer` и `deep-analysis` работают как одна цепочка из
+[`GIGACODE.md`](GIGACODE.md). Шаг 1 собирает карточку задачи, шаги 2 и 3 работают по ней.
+После реализации `deep-analysis` ещё раз сверяет результат с критериями готовности из карточки.
+Хуков у этих скиллов нет: всё описано в тексте, поэтому они работают и в GigaCode, и в Claude Code.
+
+```mermaid
+flowchart LR
+    T(["Запрос"]) --> P1["prompt-improver<br/>карточка задачи"]
+    P1 --> S["Поиск<br/>repository-analyzer · сабагенты"]
+    S --> D["deep-analysis<br/>вывод · риски · критерии"]
+    D -->|"ресерч, анализ"| R(["Ответ"])
+    D -->|"реализация"| W["Профильный скилл"]
+    W --> V["deep-analysis<br/>проверка результата"]
+    V --> R
+```
+
 ## CTF
 
 В папке [`ctf/`](ctf/) лежат сторонние скиллы для CTF и авторизованного пентеста —
@@ -199,6 +223,9 @@ cp -R skills/goal-setter skills/unlazy skills/ponytail ~/.claude/skills/
 | `unlazy` | [Leonxlnx/unlazy](https://github.com/Leonxlnx/unlazy), добавлен раздел про параллельных субагентов | MIT |
 | `ponytail` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail), только сам скилл: хука плагина и дополнительных команд здесь нет | MIT |
 | `write-for-humans-ru` | написан в этом репозитории; маркеры собраны по [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), [stop-slop](https://github.com/hardikpandya/stop-slop) и [blader/humanizer](https://github.com/blader/humanizer) с адаптацией под русский | не указана |
+| `prompt-improver` | написан в этом репозитории; подход «сначала прочитать контекст, потом вопросы с вариантами» взят из [severity1/claude-code-prompt-improver](https://github.com/severity1/claude-code-prompt-improver) (MIT) и скилла `brainstorming` из [obra/superpowers](https://github.com/obra/superpowers) (MIT), хуков здесь нет | не указана |
+| `repository-analyzer` | написан в этом репозитории; порядок разбора по мотивам агента `code-explorer` и фазы исследования кода из плагина `feature-dev` в [anthropics/claude-code](https://github.com/anthropics/claude-code), текст свой | не указана |
+| `deep-analysis` | написан в этом репозитории; проверка «сначала доказательство, потом заявление о готовности» по мотивам `verification-before-completion` из [obra/superpowers](https://github.com/obra/superpowers) (MIT) | не указана |
 
 Скиллы из `ctf/` — сторонние, с указанием источника и лицензии в [`ctf/README.md`](ctf/README.md).
 Два набора там без файла лицензии; по умолчанию все права у их авторов.
