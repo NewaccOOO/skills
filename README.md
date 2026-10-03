@@ -195,7 +195,7 @@ cp -R skills/goal-setter skills/unlazy skills/ponytail ~/.claude/skills/
 | `goal-setter` | написан в этом репозитории | не указана |
 | `unlazy` | [Leonxlnx/unlazy](https://github.com/Leonxlnx/unlazy), добавлен раздел про параллельных субагентов | MIT |
 | `ponytail` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail), только сам скилл: хука плагина и дополнительных команд здесь нет | MIT |
-| `write-for-humans-ru` | написан в этом репозитории; маркеры собраны по [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing) и [stop-slop](https://github.com/hardikpandya/stop-slop) с адаптацией под русский | не указана |
+| `write-for-humans-ru` | написан в этом репозитории; маркеры собраны по [Wikipedia: Signs of AI writing](https://en.wikipedia.org/wiki/Wikipedia:Signs_of_AI_writing), [stop-slop](https://github.com/hardikpandya/stop-slop) и [blader/humanizer](https://github.com/blader/humanizer) с адаптацией под русский | не указана |
 
 Скиллы из `ctf/` — сторонние, с указанием источника и лицензии в [`ctf/README.md`](ctf/README.md).
 Два набора там без файла лицензии; по умолчанию все права у их авторов.
