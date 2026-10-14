@@ -6,7 +6,7 @@
 
 ![Формат](https://img.shields.io/badge/формат-SKILL.md-success)
 ![Агент](https://img.shields.io/badge/агент-Claude%20Code-6f42c1)
-![Свои скиллы](https://img.shields.io/badge/свои%20скиллы-4-1f6feb)
+![Свои скиллы](https://img.shields.io/badge/свои%20скиллы-5-1f6feb)
 ![CTF](https://img.shields.io/badge/CTF-15%20скиллов%20%2B%20плагин-c2410c)
 
 [Что это](#что-это) · [Структура](#структура-репозитория) · [Скиллы](#скиллы) · [Как связаны](#как-скиллы-связаны) · [CTF](#ctf) · [Установка](#установка) · [Формат](#формат-скилла) · [Источники](#источники)
@@ -23,8 +23,9 @@ Claude Code сам читает описания и подключает под�
 
 В репозитории две части:
 
-- **четыре своих скилла** — `goal-setter`, `unlazy`, `ponytail`, `project-context-layer`. Они про то, как вести долгую
-  задачу без человека: поставить её, довести до проверяемой готовности и не писать лишнего кода.
+- **пять своих скиллов** — `goal-setter`, `unlazy`, `ponytail`, `project-context-layer`, `collab-patterns`. Они про то,
+  как вести долгую задачу без человека: поставить её, довести до проверяемой готовности, не писать лишнего кода
+  и не повторять поправок, которые пользователь уже делал. `collab-patterns` написан для Cursor, остальные — для Claude Code.
 - **папка [`ctf/`](ctf/)** — сторонние скиллы для CTF и авторизованного пентеста. Это копии
   внешних репозиториев, каждый прочитан на предмет опасного кода перед добавлением.
 
@@ -36,6 +37,7 @@ skills/
 ├── unlazy/        проверяемые критерии готовности: гейты, дерево подзадач, Stop-хук
 ├── ponytail/      минимальное рабочее решение без лишних абстракций и зависимостей
 ├── project-context-layer/  слой контекста папки из истории сессий: правила, креды вне git, память
+├── collab-patterns/        правила работы с пользователем по истории чатов Cursor
 └── ctf/           сторонние скиллы для CTF и пентеста — см. ctf/README.md
     ├── ctf-recon/ … ctf-web/           9 скиллов (ctf-claude)
     ├── recon-dominator/ … api-breaker/ 6 скиллов (claude-code-pentest)
@@ -50,6 +52,7 @@ skills/
 | [`unlazy`](unlazy/SKILL.md) | не даёт агенту сдать работу, пока не выполнены проверяемые критерии готовности |
 | [`ponytail`](ponytail/SKILL.md) | заставляет писать минимальное рабочее решение без лишних абстракций и зависимостей |
 | [`project-context-layer`](project-context-layer/SKILL.md) | собирает по истории сессий папки правила работы, креды в `.claude/secrets.env` вне git, типовые ошибки и общую память; хук не даёт закоммитить секреты |
+| [`collab-patterns`](collab-patterns/SKILL.md) | для Cursor: разбирает историю чатов и собирает правила работы с пользователем — рабочий процесс, постановку задач, поправки, формат ответов, работу через MCP. Общие правила для User Rules или правила папки в `.cursor/rules/collab/` |
 
 ### goal-setter
 
@@ -84,6 +87,16 @@ skills/
 - Большую задачу раскладывает деревом на подзадачи со своими гейтами и списком файлов. Независимые подзадачи отдаёт параллельным субагентам.
 - Перед отчётом перепроверяет все гейты заново (`--reverify`), брошенные критерии перечисляет явно.
 - По желанию ставится Stop-хук: он не даёт сессии завершиться, пока гейты не выполнены, и отпускает после шести остановок без прогресса.
+
+### collab-patterns
+
+Нужен в Cursor, когда агенту приходится каждый раз заново объяснять, как ты работаешь.
+
+- Два режима. «Все чаты» разбирает все чаты на машине и даёт текст для User Rules: подходит, если ты часто меняешь папки, домены и стеки. «Папка» разбирает чаты одного проекта и пишет правила в `.cursor/rules/collab/*.mdc`, исключённые из git.
+- `collect.py` выгружает диалоги из `~/.cursor/projects/*/agent-transcripts/`: твои реплики целиком, что агент делал между ними, где ты его прервал, что он записал во внешние системы через MCP. Похожее на токены и пароли заменяет на `[секрет]` до того, как выгрузку прочитает модель.
+- Субагенты возвращают находки в одном формате с ключом паттерна, `aggregate.py` считает, в скольких диалогах паттерн повторился и стоил ли тебе итерации.
+- В правила предлагается то, что повторилось в двух диалогах и больше или что ты прямо назвал правилом. Перед записью показывает кандидатов и ждёт подтверждения, отклонённое не предлагает снова без новых доказательств.
+- Повторный запуск разбирает только новые чаты: состояние хранится в `.cursor/collab/` или `~/.cursor/collab/`.
 
 ### ponytail
 
@@ -142,6 +155,9 @@ npx skills add NewaccOOO/skills -a claude-code -g
 
 # один скилл
 npx skills add NewaccOOO/skills -a claude-code -g --skill ponytail
+
+# collab-patterns — для Cursor
+npx skills add NewaccOOO/skills -a cursor -g --skill collab-patterns
 ```
 
 Без `npx` скиллы можно скопировать руками:
@@ -156,6 +172,7 @@ cp -R skills/goal-setter skills/unlazy skills/ponytail ~/.claude/skills/
 | `goal-setter` | `unlazy` в `~/.claude/skills/unlazy`, Python 3, Node.js 16+ |
 | `unlazy` | Node.js 16+ |
 | `ponytail` | ничего |
+| `collab-patterns` | Cursor с чатами в `~/.cursor/projects/*/agent-transcripts/`, Python 3 |
 
 Установка скиллов из `ctf/` — в [разделе CTF](#ctf) и в [`ctf/README.md`](ctf/README.md).
 
@@ -184,6 +201,7 @@ cp -R skills/goal-setter skills/unlazy skills/ponytail ~/.claude/skills/
 | `goal-setter` | написан в этом репозитории | не указана |
 | `unlazy` | [Leonxlnx/unlazy](https://github.com/Leonxlnx/unlazy), добавлен раздел про параллельных субагентов | MIT |
 | `ponytail` | [DietrichGebert/ponytail](https://github.com/DietrichGebert/ponytail), только сам скилл: хука плагина и дополнительных команд здесь нет | MIT |
+| `collab-patterns` | написан с нуля; приёмы взяты из плагинов [cursor/plugins](https://github.com/cursor/plugins) (continual-learning, workflow-from-chats), [claude-reflect](https://github.com/BayramAnnakov/claude-reflect) и [SpecStory Lore](https://docs.specstory.com/lore) | не указана |
 
 Скиллы из `ctf/` — сторонние, с указанием источника и лицензии в [`ctf/README.md`](ctf/README.md).
 Два набора там без файла лицензии; по умолчанию все права у их авторов.
